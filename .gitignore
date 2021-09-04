@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+examples/01_hello/.DS_Store
+assignments/01_salutations/.DS_Store
