@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Author : linhtran <linhtran@localhost>
+Author : linhtran <lnt@email.arizona.edu>
 Date   : 2021-09-01
 Purpose: Print greeting
 """
