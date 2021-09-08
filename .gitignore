@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 examples/01_hello/.DS_Store
 assignments/01_salutations/.DS_Store
+.vscode/

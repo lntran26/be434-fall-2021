@@ -2,9 +2,124 @@
 
 Create Python program called `saluations.py` that will print a friendly greeting.
 
+## Installing Prerequsite Modules
+
+You will need several modules moving forward which I have included in the file _requirements.txt_:
+
+```
+$ cat requirements.txt
+pytest
+pylint
+flake8
+yapf
+black
+mypy
+pytest-flake8
+pytest-mypy
+pytest-pylint
+```
+
+You can install all these modules using the following command:
+
+```
+python3 -m pip install -r requirements.txt
+```
+
+Also note that "pylint" may complain about the variable `rv` (return value) that is in the _test.py_ file.
+This is a perfectly fine variable name, IMHO, so to silence this warning, create your own configuration file like so:
+
+```
+pylint --generate-rcfile > ~/.pylintrc
+```
+
+Then edit that file to set the following line.
+Note that this should be one continuous line, but I've broken it here for display:
+
+```
+disable=too-many-locals,invalid-name,too-many-statements,too-many-arguments,\
+cell-var-from-loop,wrong-import-order
+```
+
+## Installing new.py Into Your PATH
+
+In the _bin_ directory of your repo, you should find a program called `new.py` that will help you make a new Python program.
+From this directory, you can provide the full path using `..` to indicate the parent directory:
+
+```
+$ ../../bin/new.py -h
+usage: new.py [-h] [-n NAME] [-e EMAIL] [-p PURPOSE] [-f] program
+
+Create Python argparse program
+
+positional arguments:
+  program               Program name
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  Name for docstring (default: Ken Youens-Clark)
+  -e EMAIL, --email EMAIL
+                        Email for docstring (default: kyclark@gmail.com)
+  -p PURPOSE, --purpose PURPOSE
+                        Purpose for docstring (default: Rock the Casbah)
+  -f, --force           Overwrite existing (default: False)
+```
+
+It will be unpleasant to always indicate the full path to `new.py` as you will use it often.
+I suggest you create a directory in your `$HOME` (which is often written using the tilde `~` AKA "twiddle") to put useful programs you'll write.
+It's common to create a _~/local_ or _~/.local_ (so it's hidden) to install software, and inside of that a _bin_ directory:
+
+```
+mkdir ~/.local/bin
+```
+
+You will need to ensure that this directory is included in your `$PATH`.
+If are using the `bash` shell, you can edit _~/.bashrc_ (or possibly _~/.bash_profile_ or even _~/.profile_).
+For instance, you can use `nano`:
+
+```
+nano ~/.bashrc
+```
+
+Add this line to the end:
+
+```
+export PATH=~/.local/bin:$PATH
+```
+
+Then use the `source` command to read this file and alter your `$PATH`:
+
+```
+source ~/.bashrc
+```
+
+The dot (`.`) is an alias for `source` when it is used as a command:
+
+```
+. ~/.bashrc
+```
+
+You can view your `$PATH` to ensure this directory is included:
+
+```
+echo $PATH
+```
+
+Then you can copy the `new.py` program to that location:
+
+```
+cp ../../bin/new.py ~/.local/bin
+```
+
+Verify that the program can be found using `which`:
+
+```
+$ which new.py
+/Users/kyclark/.local/bin/new.py
+```
+
 ## Getting Started with new.py
 
-You can start with the `new.py` program:
+Here is how you can create the `salutations.py` using `new.py`:
 
 ```
 $ new.py -p 'Print greeting' salutations.py
