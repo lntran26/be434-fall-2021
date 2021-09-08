@@ -44,10 +44,8 @@ def main() -> None:
     """ Main program to print greeting lines based on user input """
 
     args = get_args()
-    if args.excited:
-        print(f'{args.greeting}, {args.name}!')
-    else:
-        print(f'{args.greeting}, {args.name}.')
+    punctuation = "!" if args.excited else "."
+    print(f'{args.greeting}, {args.name}{punctuation}')
 
 
 # --------------------------------------------------
