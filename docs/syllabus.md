@@ -187,3 +187,71 @@ http://www.registrar.arizona.edu/personal-information/family-educational-rights-
 ## Subject to Change Statement
 
 The information contained in the course syllabus, other than the grade and absence policy, may be subject to change with advance notice, as deemed appropriate by the instructor.
+
+## Schedule
+
+```
+Week 1
+23 Aug   Setup
+25 Aug   Setup
+
+Week 2
+30 Aug   Hello (Strings)
+01 Sep   Hello
+
+Week 3
+06 Sep   Labor Day
+08 Sep   Assignment 1: Salutations
+
+Week 4
+13 Sep   Picnic (Lists)
+15 Sep   Assignment 2: Sum
+
+Week 5
+20 Sep   Jump the Five (Dictionaries)
+22 Sep   Assignmen 3: Solfege; Quiz 2
+
+Week 6
+27 Sep   Howler (Files)
+29 Sep   Assignment 4: TBD; Quiz 3
+
+Week 7
+04 Oct   Words Count (Files, algorithms)
+06 Oct   Assignment 6: TBD; Quiz 5
+
+Week 8
+11 Oct   Gashlycrumb (Dictionaries, files)
+13 Oct   Assignment 7: TBD; Quiz 6
+
+Week 9
+18 Oct   Apples and Bananas (Regular expressions)
+20 Oct   Assignment 8: TBD; Quiz 7
+
+Week 10
+25 Oct   Dial-a-Curse/Telephone/Ransom (Randomness)
+27 Oct   Assignment 9: TBD; Quiz 8
+
+Week 11
+01 Nov   Bottles of Beer/Twelve Days of Christmas (Algorithms)
+03 Nov   Assignment 10: TBD; Quiz 9
+
+Week 12
+08 Nov   Rhymer/Kentucky Friar (Regular expressions)
+10 Nov   Assignment 11: TBD; Quiz 10
+
+Week 13
+15 Nov   WOD (Parsing CVS files)
+17 Nov   Assignment 12: TBD; Quiz 11
+
+Week 14
+22 Nov   Password (Randomness)
+24 Nov   Quiz 12
+
+Week 15
+29 Nov   Tic-Tac-Toe (State)
+01 Dec   Tic-Tac-Toe
+
+Week 16
+06 Dec   Projects
+08 Dec   Projects
+```
