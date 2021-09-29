@@ -32,7 +32,7 @@ optional arguments:
   -n, --number  Number the lines (default: False)
 ```
 
-## File Argument Validation
+## Argument Validation
 
 The program should use `argparse` to validate the file arguments and generate errors for any file that cannot be opened.
 For instance, _blargh_ in the following example represents a nonexistent file:
@@ -65,10 +65,37 @@ You can remove the file with this command (cf. https://xkcd.com/149/):
 $ sudo rm cant-touch-this
 ```
 
+To create this argument, look at this argument created by "new.py" where the key part of this argument is the "type" that `argparse` will use to ensure that the user provides readable files:
+
+```
+    parser.add_argument('-f',
+                        '--file',
+                        help='A readable file',
+                        metavar='FILE',
+                        type=argparse.FileType('rt'),
+                        default=None)
+```
+
+Now, think about how you could modify that to make it:
+
+1. a positional argument instead of an option
+2. take one or more values
+
+Your program also needs an optional argument for "-n|--number," and you could modify this argument:
+
+```
+    parser.add_argument('-o',
+                        '--on',
+                        help='A boolean flag',
+                        action='store_true')
+```
+
+Do not move forward until your program prints a help usage like the one above.
+
 ## Program Output
 
-When run with a valid file, it should print the lines of the file.
-The _inputs/fox.txt_ file has one line:
+When run with one or more valid files, your program should print the lines of each file.
+For instance, the _inputs/fox.txt_ file has one line:
 
 ```
 $ ./cat.py inputs/fox.txt
