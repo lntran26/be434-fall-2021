@@ -23,11 +23,13 @@ def get_args():
                         nargs='+',
                         type=argparse.FileType('rt'))
 
+    # nargs = "*" means 0 or more
+    # nargs = "?" means 0 or 1
+
     parser.add_argument('-n',
                         '--number',
                         help='Number the lines',
-                        action='store_true',
-                        default=False)
+                        action='store_true')
 
     return parser.parse_args()
 
@@ -41,7 +43,8 @@ def main():
     for fh in args.file:
         for line_num, line in enumerate(fh, start=1):
             if args.number:
-                print(' '*5 + str(line_num) + '\t' + line.rstrip())
+                # print(' '*5 + str(line_num) + '\t' + line.rstrip())
+                print('{:>6}\t{}'.format(line_num, line.rstrip()))
             else:
                 print(line.rstrip())
 
