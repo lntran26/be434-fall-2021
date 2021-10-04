@@ -60,6 +60,7 @@ def main():
         out += aa
 
     args.outfile.write(out)
+    args.outfile.close()
     print(f'Output written to "{args.outfile.name}".')
 
 
