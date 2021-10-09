@@ -220,36 +220,36 @@ Week 7
 06 Oct   Assignment 6: TBD; Quiz 5
 
 Week 8
-11 Oct   Gashlycrumb (Dictionaries, files)
+11 Oct   Apples and Bananas (Regular expressions, refactoring)
 13 Oct   Assignment 7: TBD; Quiz 6
 
 Week 9
-18 Oct   Apples and Bananas (Regular expressions)
+18 Oct   Dial-a-Curse/Telephone/Ransom (Randomness)
 20 Oct   Assignment 8: TBD; Quiz 7
 
 Week 10
-25 Oct   Dial-a-Curse/Telephone/Ransom (Randomness)
+25 Oct   Bottles of Beer/Twelve Days of Christmas (Algorithms)
 27 Oct   Assignment 9: TBD; Quiz 8
 
 Week 11
-01 Nov   Bottles of Beer/Twelve Days of Christmas (Algorithms)
+01 Nov   WOD (Parsing CVS files)
 03 Nov   Assignment 10: TBD; Quiz 9
 
 Week 12
-08 Nov   Rhymer/Kentucky Friar (Regular expressions)
+08 Nov   Password (Randomness)
 10 Nov   Assignment 11: TBD; Quiz 10
 
 Week 13
-15 Nov   WOD (Parsing CVS files)
+15 Nov   Tic-Tac-Toe (State)
 17 Nov   Assignment 12: TBD; Quiz 11
 
 Week 14
-22 Nov   Password (Randomness)
+22 Nov   Tic-Tac-Toe (Types)
 24 Nov   Quiz 12
 
 Week 15
-29 Nov   Tic-Tac-Toe (State)
-01 Dec   Tic-Tac-Toe
+29 Nov   TBD
+01 Dec   TBD
 
 Week 16
 06 Dec   Projects

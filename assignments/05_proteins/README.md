@@ -185,7 +185,7 @@ def main():
 ```
 
 Run your program and verify that it will print the following output from the codons file.
-Note that I'm connect the `STDOUT` (standard out) of this program to `STDIN` (stand in) of `head -n 5` to show only the first five lines:
+Note that I'm connecting the `STDOUT` (standard out) of this program to `STDIN` (standard in) of `head -n 5` to show only the first five lines:
 
 ```
 $ ./translate.py -c inputs/codons.dna gaactacaccgttctcctggt | head -n 5
@@ -214,7 +214,7 @@ def main():
     pprint(codon_table) # pretty print
 ```
 
-When I run my version, I see the following output (which is truncated for brevity's sake:
+When I run my version, I see the following output, which is truncated for brevity's sake:
 
 ```
 $ ./translate.py -c inputs/codons.dna gaactacaccgttctcctggt
