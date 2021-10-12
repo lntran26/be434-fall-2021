@@ -82,7 +82,7 @@ def run(file1, file2, expected):
 
     rv, output = getstatusoutput(f'{PRG} {file1} {file2}')
     assert rv == 0
-    assert output.splitlines() == expected
+    assert sorted(output.splitlines()) == sorted(expected)
 
 
 # --------------------------------------------------
@@ -98,7 +98,7 @@ def run_outfile(file1, file2, expected):
         assert output.rstrip() == ''
         assert os.path.isfile(out_file)
         with open(out_file, encoding='utf-8') as fh:
-            assert fh.read().splitlines() == expected
+            assert sorted(fh.read().splitlines()) == sorted(expected)
     finally:
         if os.path.isfile(out_file):
             os.remove(out_file)

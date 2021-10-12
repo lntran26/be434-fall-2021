@@ -48,6 +48,9 @@ def main():
         else:
             new_text.append(char)
 
+        if char == ' ':
+            new_text.append('\n')
+
     print(''.join(new_text))
 
 
