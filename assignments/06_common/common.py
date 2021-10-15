@@ -45,6 +45,10 @@ def main():
 
     file1 = args.file1.read().split()
     file2 = args.file2.read().split()
+    # have to store the read() output in a variable
+    # not used directly in the for loop because once you read
+    # it's emptied the next time you call read() since you have
+    # already emptied out the "tomato can"
     out = []
 
     for word in file1:
@@ -54,6 +58,8 @@ def main():
     for word in sorted(set(out)):
         print(word, file=args.outfile)
 
+
+    # other solutions (with set and dict) in class notes
 
 # --------------------------------------------------
 if __name__ == '__main__':
