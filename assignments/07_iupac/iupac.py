@@ -42,18 +42,15 @@ def main():
                   'K': '[GT]', 'M': '[AC]', 'B': '[CGT]', 'D': '[AGT]',
                   'H': '[ACT]', 'V': '[ACG]', 'N': '[ACGT]'}
 
-    out = []  # list of lines
     for seq in args.SEQ:
-        outstr = seq + ' '
+        line = seq + ' '
         for char in seq:
             if char in 'ACGTU':
-                outstr += char
+                line += char
             else:
-                outstr += iupac_dict.get(char, ' ')
-        out.append(outstr)
-
-    for line in out:
+                line += iupac_dict.get(char, ' ')
         print(line, file=args.outfile)
+
     if args.outfile is not sys.stdout:
         print(f'Done, see output in "{args.outfile.name}"')
 
