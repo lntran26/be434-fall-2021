@@ -45,10 +45,7 @@ def main():
     for seq in args.SEQ:
         line = seq + ' '
         for char in seq:
-            if char in 'ACGTU':
-                line += char
-            else:
-                line += iupac_dict.get(char, ' ')
+            line += char if char in 'ACGTU' else iupac_dict.get(char, '-')
         print(line, file=args.outfile)
 
     if args.outfile is not sys.stdout:
