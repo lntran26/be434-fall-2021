@@ -45,7 +45,7 @@ ID : M10991:61:000000000-A7EML:1:1201:15411:3101
 Seq: CGCTAGCTACGACTCGACGACAGCGAACACGCGATCGATCGGAAATGAGAGAGTAGCAA
 ```
 
-The program should accept one or more required positional arguments that are readable files and an optional `-o|--outdir` output directory name that defaults to `out`.
+The program should accept one or more required positional arguments that are readable files and an optional `-o|--outdir` output directory name that defaults to `split`.
 When run with no arguments, the program should print a brief usage:
 
 ```

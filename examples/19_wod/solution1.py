@@ -5,6 +5,7 @@ import argparse
 import csv
 import io
 import random
+from pprint import pprint
 from tabulate import tabulate
 
 
@@ -65,6 +66,7 @@ def main():
             reps = int(reps / 2)
         wod.append((name, reps))
 
+    # pprint(wod)
     print(tabulate(wod, headers=('Exercise', 'Reps')))
 
 
