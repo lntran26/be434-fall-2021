@@ -142,7 +142,7 @@ The final exam (for graduate students only) will be drawn from a sample of small
 **Final Exam Schedule:** http://www.registrar.arizona.edu/schedules/finals.htm
 
 **Final Exam Regulations:** https://www.registrar.arizona.edu/courses/final-examination-regulations-and-information
- 
+
 ## Scheduled Topics/Activities
 
 TBD
