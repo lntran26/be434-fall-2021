@@ -28,26 +28,25 @@ def get_args():
 
 # --------------------------------------------------
 def rle(seq):
-    """Create RLE """
-    out_str = ''
+    """Create RLE
+    input (str): DNA seq as a non-empty str
+    output (str): Run-length encoding conversion of seq"""
 
-    for index, char in enumerate(seq):
-        if index == 0:  # check if this is the first char
-            out_str += char  # append the first char to out_str
-            count = 1  # initilize the first count
+    out_str = seq[0]  # initialize out_str with the first char in seq
+    count = 1  # initilize the first count
 
-        # after the first char
+    for index, char in enumerate(seq[1:]):  # after the first char
         # if the next char is similar to the last char in out_str
-        elif char == out_str[-1]:
+        if char == out_str[-1]:
             # increase the count and don't append anything to out_str
             count += 1
             # only append the count to out_str if this is the last char
-            if index == len(seq)-1:
+            if index == len(seq)-2:
                 out_str += str(count)
 
         # if the next char is not similar to the last char in out_str
         elif char != out_str[-1]:
-            # append the count of the last char to out_str only if count!=1
+            # append the count of the last char to out_str if count > 1
             if count != 1:
                 out_str += str(count)
             # append the different char to the out_str & reset the count
@@ -73,10 +72,8 @@ def main():
     """Main program"""
 
     args = get_args()
-    # print(args)
     if os.path.isfile(args.text):
         with open(args.text, encoding='UTF-8') as dna_file:
-            # print(dna_file)
             for seq in dna_file.read().splitlines():
                 print(rle(seq))
     else:
