@@ -31,7 +31,9 @@ def run(seq, expected_file):
     """ Run test """
 
     assert os.path.isfile(expected_file)
-    expected = open(expected_file).read().rstrip()
+    # expected = open(expected_file).read().rstrip()
+    with open(expected_file, encoding='UTF-8') as expected_f:
+        expected = expected_f.read().rstrip()
     rv, out = getstatusoutput(f'{PRG} {seq}')
     assert rv == 0
     assert out.strip() == expected
