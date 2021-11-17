@@ -1,5 +1,7 @@
 """ Tests for run.py """
 
+# pylint:disable=consider-using-with,unspecified-encoding
+
 import os
 import re
 from subprocess import getstatusoutput, getoutput
@@ -22,7 +24,7 @@ def test_usage():
     """ Prints usage """
 
     for flag in ['', '-h', '--help']:
-        out = getoutput('{} {}'.format(PRG, flag))
+        out = getoutput(f'{PRG} {flag}')
         assert re.match("usage", out, re.IGNORECASE)
 
 
