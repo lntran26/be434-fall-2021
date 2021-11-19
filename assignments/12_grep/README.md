@@ -161,6 +161,83 @@ grep.py::FLAKE8 SKIPPED (file(s) previously passed FLAKE8 checks)        [100%]
 =============================== warnings summary ===============================
 ```
 
+## Hints
+
+First, get your arguments sorted correctly.
+Start off with this:
+
+```
+def main():
+    args = get_args()
+    print(args)
+```
+
+Verify that you see something like this:
+
+```
+$ ./grep.py -i king inputs/sonnet-29.txt
+Namespace(pattern='king', insensitive=True, 
+outfile=<_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>, 
+files=[<_io.TextIOWrapper name='inputs/sonnet-29.txt' mode='rt' 
+encoding='UTF-8'>])
+```
+
+The `args.pattern` will be text that needs to be interpreted as a regular expression, and you should use the `re` module for this:
+
+```
+$ python3
+Python 3.9.1 (v3.9.1:1e5d33e9b9, Dec  7 2020, 12:10:52)
+[Clang 6.0 (clang-600.0.57)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import re
+```
+
+The `re` module has two functions you might consider using to find the lines that match the given regex.
+I recommend you read Chapters 14 and 15 of TPP to learn more about these functions:
+
+1. `re.match`: starts matching from the beginning of the string
+2. `re.search`: finds a match anywhere in the string.
+
+When a match is not found, the `None` value is returned.
+In the REPL, this means you'll see nothing:
+
+```
+>>> re.search('king', 'For thy sweet love remembered such wealth brings')
+```
+
+Use Python's `type()` function to verify this:
+
+```
+>>> type(re.search('king', 'For thy sweet love remembered such wealth brings'))
+<class 'NoneType'>
+```
+
+When a match is found, the return value is an `re.Match` object:
+
+```
+>>> re.search('king', 'That then I scorn to change my state with kings.')
+<re.Match object; span=(42, 46), match='king'>
+```
+
+Matches are always case-sensitive, so searching for _KING_ will fail:
+
+```
+>>> type(re.search('KING', 'That then I scorn to change my state with kings.'))
+<class 'NoneType'>
+```
+
+There is an optional `re.IGNORECASE` (which can be shortened to `re.I`) flag you can provide to indicate case-insensitive searching.
+I recommend you read Chapter 16 of _Mastering Python for Bioinformatics_ if you'd like to understand more about the `re` module's flags and how to combine them:
+
+```
+>>> re.search('KING', 'That then I scorn to change my state with kings.', re.I)
+<re.Match object; span=(42, 46), match='king'>
+```
+
+Iterate over each filehandle and then each line (as you did in `wc.py`).
+Only print the lines where `re.search()` finds a match.
+Be sure to print the name of the file when searching more than one input file, and make sure all output is sent to the defined `args.outfile` handle.
+
 ## Author
 
 Ken Youens-Clark <kyclark@gmail.com>
