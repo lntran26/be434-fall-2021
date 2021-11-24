@@ -20,7 +20,7 @@ def get_args():
 
     parser.add_argument('pattern',
                         metavar='PATTERN',
-                        type=str,
+                        # type=str, # default is all str
                         help='Search pattern')
 
     parser.add_argument('files',
@@ -32,8 +32,8 @@ def get_args():
     parser.add_argument('-i',
                         '--insensitive',
                         help='Case-insensitive search',
-                        action='store_true',
-                        default=False)
+                        action='store_true')
+    # default=False) # default is already False
 
     parser.add_argument('-o',
                         '--outfile',
@@ -51,14 +51,21 @@ def main():
 
     args = get_args()
     flags = re.IGNORECASE if args.insensitive else 0
-    for file in args.files:
-        for line in file.read().splitlines():
-            regex = re.search(args.pattern, line, flags=flags)
-            if regex is not None:
-                if len(args.files) > 1:
-                    print(f'{file.name}:{line}', file=args.outfile)
-                else:
-                    print(line, file=args.outfile)
+    for fh in args.files:  # use fh instead of special variable file
+        # for line in fh.read().splitlines():
+        for line in fh:
+            # regex = re.search(args.pattern, line, flags=flags)
+            # if regex is not None:
+            if re.search(args.pattern, line, flags=flags):
+                # if len(args.files) > 1:
+                #     print(f'{fh.name}:{line}', file=args.outfile)
+                # else:
+                #     print(line, file=args.outfile)
+
+                # print('{}{}'.format(f'{fh.name}:' if len(args.files)
+                #       > 1 else '', line, end='', file=args.outfile))
+                args.outfile.write('{}{}'.format(
+                    f'{fh.name}:' if len(args.files) > 1 else '', line))
 
 
 # --------------------------------------------------
