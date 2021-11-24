@@ -61,9 +61,8 @@ def main():
                 #     print(f'{fh.name}:{line}', file=args.outfile)
                 # else:
                 #     print(line, file=args.outfile)
-
                 # print('{}{}'.format(f'{fh.name}:' if len(args.files)
-                #       > 1 else '', line, end='', file=args.outfile))
+                #       > 1 else '', line.rstrip()), file=args.outfile)
                 args.outfile.write('{}{}'.format(
                     f'{fh.name}:' if len(args.files) > 1 else '', line))
 
