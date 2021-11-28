@@ -2,17 +2,16 @@
 """
 Author : linhtran <linhtran@localhost>
 Date   : 2021-10-23
-Purpose: Perform GridsearchCV to search for MLPR hyperparameter
+Purpose: Use GridsearchCV to find optimal MLPR hyperparameters
 on dadi-generated data
 """
 
 import argparse
-import os
+# import os
 import sys
 import pickle
 import re
 import numpy as np
-# from contextlib import redirect_stdout
 from sklearn.neural_network import MLPRegressor
 from sklearn.model_selection import GridSearchCV
 
@@ -24,9 +23,10 @@ def _tuple_of_int(input_str_or_list):
     try:
         for single_tup in re.split(' ', input_str_or_list):
             return tuple(map(int, single_tup.split(',')))
-    except:
+    except Exception as error:
         raise argparse.ArgumentTypeError(
-            "Hidden layers must be divided by space, e.g. 'h1,h1 h2,h2,h2'")
+            "Hidden layers must be divided by commas," +
+            " e.g. 'h1,h1 h2,h2,h2'") from error
 
 
 def _check_legitimate_activation(activation_name):
@@ -60,49 +60,48 @@ def get_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('data',
-                        type=str,
-                        metavar='pickle file',
-                        help='Pickled data file to use for hyperparam search')
+                        metavar='input pickle file',
+                        help='Data dictionary to use for hyperparam search',
+                        type=argparse.FileType('rt'))
 
     parser.add_argument('-hls',
                         '--hidden_layer_sizes',
                         nargs='*',
-                        metavar='tuple of int',
+                        metavar='TUPLE(S) OF INT',
                         type=_tuple_of_int,
                         action='store',
                         dest='hidden_layer_sizes',
-                        help='Tuple(s) of hidden layer sizes',
+                        help='use commas to separate layers',
                         default=[(100,)])
 
     parser.add_argument('-a',
                         '--activation',
                         nargs='*',
-                        metavar=str,
+                        metavar='NAME',
                         type=_check_legitimate_activation,
                         action='store',
                         dest='activation',
-                        help='Name(s) of activation function(s)',
+                        help='options: identity, logistic, tanh, relu',
                         default=['relu'])
 
     parser.add_argument('-s',
                         '--solver',
                         nargs='*',
-                        metavar=str,
+                        metavar='NAME',
                         type=_check_legitimate_solver,
                         action='store',
                         dest='solver',
-                        help='Name(s) of solver(s)',
+                        help='options: lbfgs, sgd, adam',
                         default=['adam'])
 
     parser.add_argument('-lr',
                         '--learning_rate',
                         nargs='*',
-                        metavar=str,
+                        metavar='NAME',
                         type=_check_legitimate_learning_rate,
                         action='store',
                         dest='learning_rate',
-                        help='Name(s) of learning_rate(s) for sgd',
-                        default=None)
+                        help='options: constant, invscaling, adaptive')
 
     parser.add_argument('-mi',
                         '--max_iter',
@@ -119,46 +118,41 @@ def get_args():
                         type=float,
                         action='store',
                         dest='alpha',
-                        help='L2 penalty regularization param',
-                        default=None)
+                        help='L2 penalty regularization param')
 
     parser.add_argument('-es',
                         '--early_stopping',
-                        metavar='boolean',
+                        metavar='BOOLEAN',
                         type=bool,
                         action='store',
                         dest='early_stopping',
                         nargs='*',
-                        help='Whether to use early stopping',
-                        default=None)
+                        help='Whether to use early stopping')
 
     parser.add_argument('-t',
                         '--tol',
                         type=float,
                         action='store',
                         dest='tol',
-                        help='tolerance for optimization with early stopping',
-                        default=None)
+                        help='tolerance for optimization with early stopping')
 
     parser.add_argument('-n',
                         '--n_iter_no_change',
                         type=int,
                         action='store',
                         dest='n_iter_no_change',
-                        help='Maximum n epochs to not meet tol improvement',
-                        default=None)
+                        help='Max n epochs to not meet tol improvement')
 
     parser.add_argument('-v',
                         '--verbose',
                         type=int,
                         help='Level of GridsearchCV Verbose',
-                        default=4)
+                        default=0)
 
     parser.add_argument('-cv',
                         '--cross_val',
                         type=int,
-                        help='k-fold cross validation, default None=5',
-                        default=None)
+                        help='k-fold cross validation, default None=5')
 
     parser.add_argument('-o',
                         '--outfile',
@@ -167,50 +161,7 @@ def get_args():
                         type=argparse.FileType('wt'),
                         default=sys.stdout)
 
-    # parser.add_argument('-e',
-    #                     '--errfile',
-    #                     help='Error filename',
-    #                     metavar='FILE',
-    #                     type=argparse.FileType('wt'),
-    #                     default=sys.stderr)
-
     return parser.parse_args()
-
-
-# --------------------------------------------------
-def model_search(model, train_dict, param_dict, verbose=4):
-    '''Use GridSearchCV to search for the best hyperparameters
-    for ML models
-
-    Input:
-    model: ML algorthims such as MLPR
-    train_dict: dictionary of training data used for the tuning
-    param_dict: dictionary of different model hyperparameters to be tuned
-    n_top: int, number of top results to print out
-    verbose: int, level of details of the run to output to stdout
-
-    Output: results dictionary
-    '''
-
-    # load training data from train_dict
-    train_features = [train_dict[params].data.flatten()
-                      for params in train_dict]
-    train_labels = [params for params in train_dict]
-
-    # perform grid search using selected model, data, and params
-    cv = GridSearchCV(model, param_dict, n_jobs=-1, verbose=verbose)
-    cv.fit(train_features, train_labels)
-
-    return cv.cv_results_
-
-
-# --------------------------------------------------
-def test_model_search():
-    '''
-    Test for model_search() method
-    '''
-
-    return
 
 
 # --------------------------------------------------
@@ -220,12 +171,20 @@ def main():
     args = get_args()
 
     # Load training data
-    # check if the file exists:
-    if os.path.isfile(args.data):
-        train_dict = pickle.load(open(args.data, 'rb'))
-        print(f'Data file used is {args.data}')  # , file=args.outfile)
-    else:
-        sys.exit(f'Error: {args.data}: File not found')
+    # # check if the file exists:
+    # if os.path.isfile(args.data):
+    #     train_dict = pickle.load(open(args.data, 'rb'))
+    #     print(f'\nData file used is {args.data}')  # , file=args.outfile)
+    # else:
+    #     sys.exit(f'Error: {args.data}: File not found')
+    # train_dict = pickle.load(open(args.data.name, 'rb'))
+    with open(args.data.name, 'rb') as train_dict_fh:
+        train_dict = pickle.load(train_dict_fh)
+    print(f'\nData file used is {args.data.name}')
+
+    # need to check if pickle file, and if it is a dictionary
+    # test what the program print out for example if given
+    # a foo textfile as input file
 
     # Specify the ML models to be optimized
     mlpr = MLPRegressor()
@@ -240,8 +199,12 @@ def main():
 
     # get the total number of models being tested from param_dict
     n_models = 1
-    for hyperparam in param_dict:
-        n_models *= len(param_dict[hyperparam])
+    # for hyperparam in param_dict:
+    #     n_models *= len(param_dict[hyperparam])
+    for hyperparam in param_dict.values():
+        n_models *= len(hyperparam)
+
+    print(f"\nNumber of models tested: {n_models}\n")
 
     # call model_search to run gridsearch and store results
     # redirecting info from stdout to file
@@ -250,22 +213,22 @@ def main():
     # results = model_search(mlpr, train_dict, param_dict, args.verbose)
 
     # load training data from train_dict
-    train_features = [train_dict[params].data.flatten()
+    train_features = [np.array(train_dict[params]).flatten()
                       for params in train_dict]
-    train_labels = [params for params in train_dict]
+    train_labels = list(train_dict)
 
     # perform grid search using selected model, data, and params
-    with redirect_stdout(args.outfile):
-        cv = GridSearchCV(mlpr, param_dict, n_jobs=-1,
-                          verbose=args.verbose, cv=args.cross_val)
-        cv.fit(train_features, train_labels)
-        results = cv.cv_results_
+    # with redirect_stdout(args.outfile):
+    cv = GridSearchCV(mlpr, param_dict, n_jobs=-1,
+                      verbose=args.verbose, cv=args.cross_val)
+    cv.fit(train_features, train_labels)
+    results = cv.cv_results_
 
-    # todo: process results to print out certain things
+    # process results to print out certain things
     for i in range(1, n_models + 1):
         candidates = np.flatnonzero(results['rank_test_score'] == i)
         for candidate in candidates:
-            print('\n', f'Model with rank: {i}')  # , file=args.outfile)
+            print(f'\nModel with rank: {i}')  # , file=args.outfile)
             print("Mean validation score: {0:.3f} (std: {1:.3f})"
                   .format(results['mean_test_score'][candidate],
                           results['std_test_score'][candidate]))  # ,
