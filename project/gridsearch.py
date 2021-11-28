@@ -185,7 +185,7 @@ def main():
     # process input from command line into a dictionary of params
     param_dict = {}
     for arg in vars(args):
-        if arg not in ['data', 'outfile',
+        if arg not in ['data', 'outfile', 'cross_val',
                        'verbose'] and getattr(args, arg) is not None:
             param_dict[arg] = getattr(args, arg)
             print(arg, ':', getattr(args, arg), file=args.outfile)
