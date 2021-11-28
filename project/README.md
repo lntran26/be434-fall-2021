@@ -18,7 +18,7 @@ The program accepts as inputs:
 3. level of verbose for printing out output as the cross-validation runs.
 4. specified path for output file (print to stdout by default).
 
-When run with no arguments, the program should produce a brief usage:
+When run with no arguments, the program will produce a brief usage:
 
 ```
 $ ./gridsearch.py
@@ -29,7 +29,7 @@ usage: gridsearch.py [-h] [-hls [TUPLES OF INT ...]] [-a [NAME ...]] [-s [NAME .
 gridsearch.py: error: the following arguments are required: pickle file
 ```
 
-When run with the `-h|--help` flag, it should produce a longer help document:
+When run with the `-h|--help` flag, it will produce a longer help document:
 
 ```
 $ ./gridsearch -h
@@ -79,7 +79,7 @@ optional arguments:
                         name='<stdout>' mode='w' encoding='utf-8'>)
 ```
 
-The output from the program should be the rankings of MLPR models created from all combinations of input hyperparameter values.
+The output from the program provides the rankings of MLPR models created from all combinations of input hyperparameter values.
 For instance, the result for running with the default model on a toy data set with 100 examples (train_data_100) is:
 ```
 $ ./gridsearch.py inputs/train_data_100
@@ -125,7 +125,7 @@ Mean validation score: 0.429 (std: 0.023)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (25, 25, 25, 25), 'max_iter': 500, 'solver': 'adam'}
 ```
 
-We can also test different activation function and optimizer (solver) options. Note that in this case we have to increase the max iteration parameter (mi) to avoid getting non-convergence warning.
+We can also test different activation function and optimizer (solver) options. Note that in this case we may have to increase the max iteration parameter (mi) to avoid getting non-convergence warning.
 
 ```
 $ ./gridsearch.py inputs/train_data_100 -hls 50,50 -a relu tanh -s lbfgs adam -mi 10000
@@ -155,7 +155,7 @@ Mean validation score: 0.062 (std: 1.353)
 Parameters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
 ```
 
-Verbose mode will allow to print more information on each cross validation run
+Verbose mode (levels: 0-4) specification will print more information on each cross validation run for each model:
 
 ```
 $ ./gridsearch.py inputs/train_data_1000 -hls 50,50 -s lbfgs  -mi 10000 -v 4
