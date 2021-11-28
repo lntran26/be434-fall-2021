@@ -179,6 +179,34 @@ Mean validation score: 0.944 (std: 0.009)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
 ```
 
+The default folds for cross-validation is 5, but can be customized as desired:
+```
+$ ./gridsearch.py inputs/train_data_1000 -s lbfgs -cv 10 -v 2 -mi 10000
+
+Data file used is inputs/train_data_1000
+hidden_layer_sizes : [(100,)]
+activation : ['relu']
+solver : ['lbfgs']
+max_iter : [10000]
+
+Number of models tested: 1
+
+Fitting 10 folds for each of 1 candidates, totalling 10 fits
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   5.2s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   5.3s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   5.6s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   5.9s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   6.6s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   1.9s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   7.6s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   7.6s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   7.9s
+[CV] END activation=relu, hidden_layer_sizes=(100,), max_iter=10000, solver=lbfgs; total time=   4.5s
+Model with rank: 1
+Mean validation score: 0.923 (std: 0.028)
+Parameters: {'activation': 'relu', 'hidden_layer_sizes': (100,), 'max_iter': 10000, 'solver': 'lbfgs'}
+```
+
 Changes to the code should be run through the test suites using command `make test` to ensure passing of all tests:
 
 ```
