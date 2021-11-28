@@ -7,7 +7,6 @@ on dadi-generated data
 """
 
 import argparse
-# import os
 import sys
 import pickle
 import re
@@ -171,70 +170,52 @@ def main():
     args = get_args()
 
     # Load training data
-    # # check if the file exists:
-    # if os.path.isfile(args.data):
-    #     train_dict = pickle.load(open(args.data, 'rb'))
-    #     print(f'\nData file used is {args.data}')  # , file=args.outfile)
-    # else:
-    #     sys.exit(f'Error: {args.data}: File not found')
-    # train_dict = pickle.load(open(args.data.name, 'rb'))
     with open(args.data.name, 'rb') as train_dict_fh:
         train_dict = pickle.load(train_dict_fh)
-    print(f'\nData file used is {args.data.name}')
+    print(f'\nData file used is {args.data.name}',  file=args.outfile)
 
-    # need to check if pickle file, and if it is a dictionary
-    # test what the program print out for example if given
-    # a foo textfile as input file
+    # nice to have: check if pickle file is a dictionary
+    # with float numpy arrays for regressions
 
-    # Specify the ML models to be optimized
-    mlpr = MLPRegressor()
-
-    # process input from command line into a dictionary of params
-    param_dict = {}
-    for arg in vars(args):
-        if arg not in ['data', 'outfile', 'errfile',
-                       'verbose'] and getattr(args, arg) is not None:
-            param_dict[arg] = getattr(args, arg)
-            print(arg, ':', getattr(args, arg))  # , file=args.outfile)
-
-    # get the total number of models being tested from param_dict
-    n_models = 1
-    # for hyperparam in param_dict:
-    #     n_models *= len(param_dict[hyperparam])
-    for hyperparam in param_dict.values():
-        n_models *= len(hyperparam)
-
-    print(f"\nNumber of models tested: {n_models}\n")
-
-    # call model_search to run gridsearch and store results
-    # redirecting info from stdout to file
-    # sys.stderr = sys.stdout # reroute err to stdout as well here
-    # with redirect_stderr(args.outfile):
-    # results = model_search(mlpr, train_dict, param_dict, args.verbose)
-
-    # load training data from train_dict
+    # process training data into features and labels
     train_features = [np.array(train_dict[params]).flatten()
                       for params in train_dict]
     train_labels = list(train_dict)
 
-    # perform grid search using selected model, data, and params
-    # with redirect_stdout(args.outfile):
+    # process input from command line into a dictionary of params
+    param_dict = {}
+    for arg in vars(args):
+        if arg not in ['data', 'outfile',
+                       'verbose'] and getattr(args, arg) is not None:
+            param_dict[arg] = getattr(args, arg)
+            print(arg, ':', getattr(args, arg), file=args.outfile)
+
+    # get the total number of models being tested from param_dict
+    n_models = 1
+    for hyperparam in param_dict.values():
+        n_models *= len(hyperparam)
+    print(f"\nNumber of models tested: {n_models}\n", file=args.outfile)
+
+    # Specify the ML models to be optimized
+    mlpr = MLPRegressor()
+
+    # perform grid search using selected ML model, data, and params
     cv = GridSearchCV(mlpr, param_dict, n_jobs=-1,
                       verbose=args.verbose, cv=args.cross_val)
     cv.fit(train_features, train_labels)
     results = cv.cv_results_
 
-    # process results to print out certain things
+    # process results for printing ranked models
     for i in range(1, n_models + 1):
         candidates = np.flatnonzero(results['rank_test_score'] == i)
         for candidate in candidates:
-            print(f'\nModel with rank: {i}')  # , file=args.outfile)
+            print(f'Model with rank: {i}', file=args.outfile)
             print("Mean validation score: {0:.3f} (std: {1:.3f})"
                   .format(results['mean_test_score'][candidate],
-                          results['std_test_score'][candidate]))  # ,
-            # file=args.outfile)
-            print(f"Parameters: {results['params'][candidate]}")  # ,
-            # file=args.outfile)
+                          results['std_test_score'][candidate]),
+                  file=args.outfile)
+            print(f"Parameters: {results['params'][candidate]}",
+                  file=args.outfile)
 
 
 # --------------------------------------------------
