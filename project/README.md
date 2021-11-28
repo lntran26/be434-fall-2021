@@ -90,8 +90,10 @@ activation : ['relu']
 solver : ['adam']
 max_iter : [500]
 
+Number of models tested: 1
+
 Model with rank: 1
-Mean validation score: 0.458 (std: 0.040)
+Mean validation score: 0.441 (std: 0.033)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (100,), 'max_iter': 500, 'solver': 'adam'}
 ```
 
@@ -100,7 +102,7 @@ The program will print out the data used and the specification of the model test
 We can test different model configurations to see if we can get a better score with different hidden layer size architectures:
 
 ```
-../gridsearch.py inputs/train_data_100 -hls 100 50,50 25,25,25,25
+$ ./gridsearch.py inputs/train_data_100 -hls 100 50,50 25,25,25,25
 
 Data file used is inputs/train_data_100
 hidden_layer_sizes : [(100,), (50, 50), (25, 25, 25, 25)]
@@ -108,23 +110,25 @@ activation : ['relu']
 solver : ['adam']
 max_iter : [500]
 
+Number of models tested: 3
+
 Model with rank: 1
-Mean validation score: 0.516 (std: 0.120)
+Mean validation score: 0.446 (std: 0.022)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 500, 'solver': 'adam'}
 
 Model with rank: 2
-Mean validation score: 0.501 (std: 0.154)
-Parameters: {'activation': 'relu', 'hidden_layer_sizes': (25, 25, 25, 25), 'max_iter': 500, 'solver': 'adam'}
+Mean validation score: 0.437 (std: 0.041)
+Parameters: {'activation': 'relu', 'hidden_layer_sizes': (100,), 'max_iter': 500, 'solver': 'adam'}
 
 Model with rank: 3
-Mean validation score: 0.443 (std: 0.038)
-Parameters: {'activation': 'relu', 'hidden_layer_sizes': (100,), 'max_iter': 500, 'solver': 'adam'}
+Mean validation score: 0.429 (std: 0.023)
+Parameters: {'activation': 'relu', 'hidden_layer_sizes': (25, 25, 25, 25), 'max_iter': 500, 'solver': 'adam'}
 ```
 
 We can also test different activation function and optimizer (solver) options. Note that in this case we have to increase the max iteration parameter (mi) to avoid getting non-convergence warning.
 
 ```
-./gridsearch.py inputs/train_data_100 -hls 50,50 -a relu tanh -s lbfgs adam -mi 10000
+$ ./gridsearch.py inputs/train_data_100 -hls 50,50 -a relu tanh -s lbfgs adam -mi 10000
 
 Data file used is inputs/train_data_100
 hidden_layer_sizes : [(50, 50)]
@@ -132,43 +136,78 @@ activation : ['relu', 'tanh']
 solver : ['lbfgs', 'adam']
 max_iter : [10000]
 
+Number of models tested: 4
+
 Model with rank: 1
-Mean validation score: 0.783 (std: 0.106)
+Mean validation score: 0.635 (std: 0.353)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
 
 Model with rank: 2
-Mean validation score: 0.645 (std: 0.335)
-Parameters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
+Mean validation score: 0.449 (std: 0.022)
+Parameters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'adam'}
 
 Model with rank: 3
-Mean validation score: 0.433 (std: 0.034)
+Mean validation score: 0.445 (std: 0.034)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'adam'}
 
 Model with rank: 4
-Mean validation score: 0.390 (std: 0.155)
-Parameters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'adam'}
+Mean validation score: 0.062 (std: 1.353)
+Parameters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
 ```
 
 Verbose mode will allow to print more information on each cross validation run
 
 ```
-./gridsearch.py inputs/train_data_1000 -hls 50,50 -s lbfgs  -mi 5000 -v 4
+$ ./gridsearch.py inputs/train_data_1000 -hls 50,50 -s lbfgs  -mi 10000 -v 4
 
 Data file used is inputs/train_data_1000
 hidden_layer_sizes : [(50, 50)]
 activation : ['relu']
 solver : ['lbfgs']
-max_iter : [5000]
-Fitting 5 folds for each of 1 candidates, totalling 5 fits
-[CV 1/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=5000, solver=lbfgs; total time=   3.4s
-[CV 4/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=5000, solver=lbfgs; total time=   5.5s
-[CV 5/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=5000, solver=lbfgs; total time=   6.4s
-[CV 2/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=5000, solver=lbfgs; total time=   7.5s
-[CV 3/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=5000, solver=lbfgs; total time=   8.7s
+max_iter : [10000]
 
+Number of models tested: 1
+
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+[CV 1/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=10000, solver=lbfgs; total time=   4.5s
+[CV 5/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=10000, solver=lbfgs; total time=   5.2s
+[CV 4/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=10000, solver=lbfgs; total time=   6.8s
+[CV 3/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=10000, solver=lbfgs; total time=   7.6s
+[CV 2/5] END activation=relu, hidden_layer_sizes=(50, 50), max_iter=10000, solver=lbfgs; total time=   9.5s
 Model with rank: 1
-Mean validation score: 0.943 (std: 0.006)
-Parameters: {'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 5000, 'solver': 'lbfgs'}
+Mean validation score: 0.944 (std: 0.009)
+Parameters: {'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
+```
+
+Changes to the code should be run through the test suites using command `make test` to ensure passing of all tests:
+
+```
+$ make test
+pytest -xv --pylint --flake8 test.py gridsearch.py
+======================================== test session starts ========================================
+...
+collected 16 items                                                                                  
+--------------------------------------------------------------------------------
+Linting files
+.
+--------------------------------------------------------------------------------
+
+test.py::PYLINT PASSED                                                                        [  6%]
+test.py::FLAKE8 PASSED                                                                        [ 12%]
+test.py::test_exists PASSED                                                                   [ 18%]
+test.py::test_usage PASSED                                                                    [ 25%]
+test.py::test_bad_file PASSED                                                                 [ 31%]
+test.py::test_bad_hls PASSED                                                                  [ 37%]
+test.py::test_bad_activation PASSED                                                           [ 43%]
+test.py::test_bad_solver PASSED                                                               [ 50%]
+test.py::test1 PASSED                                                                         [ 56%]
+test.py::test2 PASSED                                                                         [ 62%]
+test.py::test3 PASSED                                                                         [ 68%]
+test.py::test1_outfile PASSED                                                                 [ 75%]
+test.py::test2_outfile PASSED                                                                 [ 81%]
+test.py::test3_outfile PASSED                                                                 [ 87%]
+gridsearch.py::PYLINT SKIPPED (file(s) previously passed pylint checks)                       [ 93%]
+gridsearch.py::FLAKE8 SKIPPED (file(s) previously passed FLAKE8 checks)                       [100%]
 ```
 
 ## Author
