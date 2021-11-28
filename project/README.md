@@ -99,7 +99,7 @@ Parameters: {'activation': 'relu', 'hidden_layer_sizes': (100,), 'max_iter': 500
 
 The program will print out the data used and the specification of the model tested.
 
-We can test different model configurations to see if we can get a better score with different hidden layer size architectures:
+We can test different model configurations to see if we can get a better score with different hidden layer size architectures with the `-hls|--hidden_layer_sizes` flag:
 
 ```
 $ ./gridsearch.py inputs/train_data_100 -hls 100 50,50 25,25,25,25
@@ -125,7 +125,7 @@ Mean validation score: 0.429 (std: 0.023)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (25, 25, 25, 25), 'max_iter': 500, 'solver': 'adam'}
 ```
 
-We can also test different activation function and optimizer (solver) options. Note that in this case we may have to increase the max iteration parameter (mi) to avoid getting non-convergence warning.
+We can also test different activation function and optimizer (solver) options with the `-a|--activation` and `-s|--solver` flags. Note that in this case we may have to increase the max iteration parameter with the `-mi|--max_iter` flag to avoid getting non-convergence warning.
 
 ```
 $ ./gridsearch.py inputs/train_data_100 -hls 50,50 -a relu tanh -s lbfgs adam -mi 10000
@@ -155,7 +155,7 @@ Mean validation score: 0.062 (std: 1.353)
 Parameters: {'activation': 'tanh', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
 ```
 
-Verbose mode (levels: 0-4) specification will print more information on each cross validation run for each model:
+Verbose mode (levels: 0-4) with the `-v|--verbose` flag can be used to tune the amount of information printed out for each run:
 
 ```
 $ ./gridsearch.py inputs/train_data_1000 -hls 50,50 -s lbfgs  -mi 10000 -v 4
@@ -179,7 +179,7 @@ Mean validation score: 0.944 (std: 0.009)
 Parameters: {'activation': 'relu', 'hidden_layer_sizes': (50, 50), 'max_iter': 10000, 'solver': 'lbfgs'}
 ```
 
-The default folds for cross-validation is 5, but can be customized as desired:
+The default folds for cross-validation is 5, but can be customized as desired with the `-cv|--cross_val` flag:
 ```
 $ ./gridsearch.py inputs/train_data_1000 -s lbfgs -cv 10 -v 2 -mi 10000
 
