@@ -2,7 +2,7 @@
 
 ## Scikit-learn GridSearchCV Command Line Interface (CLI) for Multi-layer Perceptron Regressor and dadi
 
-This program provide a command line interface for exhaustive search over specified parameter values for the [scikit-learn](https://scikit-learn.org/stable/index.html) [Multi-layer Perceptron Regressor (MLPR)](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPRegressor.html?highlight=mlpr) training on [dadi](https://dadi.readthedocs.io/en/latest/) demographic model's site frequency spectrum (SFS) data. It implements the scikit-learn method [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html?highlight=gridsearchcv#sklearn.model_selection.GridSearchCV) and allow users to input a wide variety of parameter options from the command line and output the rankings of all models' performance from best to worst.
+This program provides a command line interface for exhaustive search over specified hyperparameter values for the [scikit-learn](https://scikit-learn.org/stable/index.html) [Multi-layer Perceptron Regressor (MLPR)](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPRegressor.html?highlight=mlpr) training on [dadi](https://dadi.readthedocs.io/en/latest/) demographic model's site frequency spectrum (SFS) data. It implements the scikit-learn method [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html?highlight=gridsearchcv#sklearn.model_selection.GridSearchCV) and allow users to input a wide variety of hyperparameter options from the command line and output the rankings of all models' performance from best to worst.
 
 ## Requirements
 1. scikit-learn 0.24.1
@@ -14,7 +14,7 @@ To install the dependencies, run `make install`.
 ## Usage
 The program accepts as inputs:
 1. a pickle data file containing dadi-simulated SFS data as training features and the demographic parameters used to generate the SFS as training labels.
-2. different parameter values for the Multi-layer Perceptron Regressor, including choices of hidden layer sizes, activation functions, optimizer algorithm, learning rate, number of max iteration, L2 regularization value, whether or not to implement, early stopping, tolerance value (if implementing early stopping), number of iterations allowed with no improvement (if implementing early stopping), number of folds for cross-validation.
+2. different hyperparameter values for the Multi-layer Perceptron Regressor, including choices of hidden layer size, activation function, optimizer algorithm, learning rate, number of max iteration, L2 regularization value, whether or not to implement early stopping, tolerance value (if implementing early stopping), number of iterations allowed with no improvement (if implementing early stopping), number of folds for cross-validation.
 3. level of verbose for printing out output as the cross-validation runs.
 4. specified path for output file (print to stdout by default).
 
